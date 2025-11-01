@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="Professional baker's calculator for bread, pizza, and pastry recipes. Calculate ingredients using baker's percentages with poolish support.">
+    <meta name="theme-color" content="#d4a574">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Baker's Calc">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <title>Baker's Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Baker's Calculator</h1>
+            <p class="subtitle">Scale your bread and pizza recipes with ease</p>
+        </header>
+
+        <div class="calculator">
+            <div class="section">
+                <h2>Unit of Measurement</h2>
+                <p class="help-text">Select your preferred unit for all measurements</p>
+                <div class="form-row">
+                    <label class="form-label">Unit:</label>
+                    <select id="unitSelect" class="form-input" onchange="calculate()">
+                        <option value="g">grams (g)</option>
+                        <option value="kg">kilograms (kg)</option>
+                        <option value="oz">ounces (oz)</option>
+                        <option value="lb">pounds (lb)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Final Dough Weight</h2>
+                <p class="help-text">Enter the total weight of dough you want to make</p>
+                <div class="form-row">
+                    <label class="form-label">Dough weight:</label>
+                    <input type="number" id="doughWeight" class="form-input" value="1000" placeholder="Weight" oninput="calculate()">
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Hydration</h2>
+                <p class="help-text">Water content as percentage of flour weight</p>
+                <div class="form-row">
+                    <label class="form-label">Hydration:</label>
+                    <div class="input-with-unit">
+                        <input type="number" id="hydration" class="form-input" value="65" placeholder="Hydration" min="0" max="200" step="0.1" oninput="calculate()">
+                        <span class="unit-symbol">%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Poolish (Optional)</h2>
+                <p class="help-text">Pre-ferment starter for improved flavor</p>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="usePoolish" onchange="togglePoolish()">
+                        <span>Use poolish</span>
+                    </label>
+                </div>
+                <div id="poolishInputs" style="display: none; margin-top: 15px;">
+                    <div class="form-row">
+                        <label class="form-label">Poolish weight:</label>
+                        <input type="number" id="poolishWeight" class="form-input" value="200" placeholder="Weight" oninput="calculate()">
+                    </div>
+                    <div class="form-row">
+                        <label class="form-label">Poolish hydration:</label>
+                        <div class="input-with-unit">
+                            <input type="number" id="poolishHydration" class="form-input" value="100" placeholder="Hydration" min="0" max="200" step="0.1" oninput="calculate()">
+                            <span class="unit-symbol">%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Salt</h2>
+                <p class="help-text">Salt as percentage of flour weight</p>
+                <div class="form-row">
+                    <label class="form-label">Salt:</label>
+                    <div class="input-with-unit">
+                        <input type="number" id="salt" class="form-input" value="2" placeholder="Salt" min="0" max="10" step="0.1" oninput="calculate()">
+                        <span class="unit-symbol">%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Yeast</h2>
+                <p class="help-text">Yeast as percentage of flour weight</p>
+                <div class="form-row">
+                    <label class="form-label">Yeast:</label>
+                    <div class="input-with-unit">
+                        <input type="number" id="yeast" class="form-input" value="1" placeholder="Yeast" min="0" max="10" step="0.1" oninput="calculate()">
+                        <span class="unit-symbol">%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section results" id="results">
+                <h2>Calculated Amounts</h2>
+                <div id="resultsList"></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Baker's Percentage Calculator | Perfect for bread, pizza, and pastry recipes</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Register Service Worker for offline support
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registered:', registration);
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed:', err);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
