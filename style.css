@@ -267,6 +267,38 @@ h2 {
     pointer-events: none;
 }
 
+.recipe-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.recipe-link {
+    display: inline-block;
+    padding: 10px 16px;
+    background: white;
+    color: #5d3a1a;
+    text-decoration: none;
+    border: 2px solid #d4a574;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.recipe-link:hover {
+    background: #8b6f47;
+    color: white;
+    border-color: #8b6f47;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(61, 40, 23, 0.2);
+}
+
+.recipe-link:active {
+    transform: translateY(0);
+}
+
 .results {
     background: #faf6f1;
     border-radius: 8px;
@@ -367,6 +399,15 @@ footer {
     .radio-group {
         flex-direction: column;
         gap: 10px;
+    }
+
+    .recipe-links {
+        gap: 8px;
+    }
+
+    .recipe-link {
+        font-size: 0.9rem;
+        padding: 8px 12px;
     }
 }
 

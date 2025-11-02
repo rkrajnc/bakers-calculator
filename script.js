@@ -6,6 +6,92 @@ const unitConversions = {
     lb: 453.592
 };
 
+// Recipe presets
+const recipes = {
+    classicBread: {
+        name: 'Classic Bread',
+        doughWeight: 1000,
+        hydration: 65,
+        salt: 2,
+        yeast: 1,
+        usePoolish: false,
+        poolishWeight: 200,
+        poolishHydration: 100
+    },
+    pizza3x: {
+        name: '3x Pizza (270g each)',
+        doughWeight: 810,
+        hydration: 70,
+        salt: 2.5,
+        yeast: 0.5,
+        usePoolish: true,
+        poolishWeight: 200,
+        poolishHydration: 100
+    },
+    noKnead: {
+        name: 'No-Knead Bread',
+        doughWeight: 1000,
+        hydration: 70,
+        salt: 2,
+        yeast: 0.25,
+        usePoolish: false,
+        poolishWeight: 200,
+        poolishHydration: 100
+    },
+    sourdough: {
+        name: 'Sourdough',
+        doughWeight: 1000,
+        hydration: 75,
+        salt: 2,
+        yeast: 0,
+        usePoolish: true,
+        poolishWeight: 200,
+        poolishHydration: 100
+    },
+    focaccia: {
+        name: 'Focaccia',
+        doughWeight: 800,
+        hydration: 80,
+        salt: 2.5,
+        yeast: 1.5,
+        usePoolish: false,
+        poolishWeight: 200,
+        poolishHydration: 100
+    },
+    baguette: {
+        name: 'Baguette',
+        doughWeight: 900,
+        hydration: 68,
+        salt: 2.2,
+        yeast: 0.8,
+        usePoolish: true,
+        poolishWeight: 250,
+        poolishHydration: 100
+    }
+};
+
+// Load a recipe preset
+function loadRecipe(recipeName) {
+    const recipe = recipes[recipeName];
+    if (!recipe) return;
+
+    // Set all form values
+    document.getElementById('doughWeight').value = recipe.doughWeight;
+    document.getElementById('hydration').value = recipe.hydration;
+    document.getElementById('salt').value = recipe.salt;
+    document.getElementById('yeast').value = recipe.yeast;
+    document.getElementById('usePoolish').checked = recipe.usePoolish;
+    document.getElementById('poolishWeight').value = recipe.poolishWeight;
+    document.getElementById('poolishHydration').value = recipe.poolishHydration;
+
+    // Toggle poolish visibility
+    const poolishInputs = document.getElementById('poolishInputs');
+    poolishInputs.style.display = recipe.usePoolish ? 'block' : 'none';
+
+    // Recalculate
+    calculate();
+}
+
 // Toggle poolish inputs visibility
 function togglePoolish() {
     const checkbox = document.getElementById('usePoolish');
