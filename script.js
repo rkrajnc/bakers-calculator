@@ -70,9 +70,27 @@ const recipes = {
     }
 };
 
-// Load a recipe preset
+// Load saved recipes from localStorage
+function getSavedRecipes() {
+    const saved = localStorage.getItem('bakerCalcRecipes');
+    return saved ? JSON.parse(saved) : {};
+}
+
+// Save recipes to localStorage
+function saveSavedRecipes(recipes) {
+    localStorage.setItem('bakerCalcRecipes', JSON.stringify(recipes));
+}
+
+// Load a recipe preset or saved recipe
 function loadRecipe(recipeName) {
-    const recipe = recipes[recipeName];
+    let recipe = recipes[recipeName];
+
+    // If not a preset, check saved recipes
+    if (!recipe) {
+        const savedRecipes = getSavedRecipes();
+        recipe = savedRecipes[recipeName];
+    }
+
     if (!recipe) return;
 
     // Set all form values
@@ -90,6 +108,89 @@ function loadRecipe(recipeName) {
 
     // Recalculate
     calculate();
+}
+
+// Save current recipe
+function saveCurrentRecipe() {
+    const recipeName = document.getElementById('recipeName').value.trim();
+
+    if (!recipeName) {
+        alert('Please enter a name for your recipe');
+        return;
+    }
+
+    // Get current form values
+    const recipe = {
+        name: recipeName,
+        doughWeight: parseFloat(document.getElementById('doughWeight').value) || 1000,
+        hydration: parseFloat(document.getElementById('hydration').value) || 65,
+        salt: parseFloat(document.getElementById('salt').value) || 2,
+        yeast: parseFloat(document.getElementById('yeast').value) || 1,
+        usePoolish: document.getElementById('usePoolish').checked,
+        poolishWeight: parseFloat(document.getElementById('poolishWeight').value) || 200,
+        poolishHydration: parseFloat(document.getElementById('poolishHydration').value) || 100
+    };
+
+    // Generate a unique key
+    const recipeKey = 'saved_' + recipeName.toLowerCase().replace(/[^a-z0-9]/g, '_');
+
+    // Get existing saved recipes
+    const savedRecipes = getSavedRecipes();
+
+    // Add new recipe
+    savedRecipes[recipeKey] = recipe;
+
+    // Save to localStorage
+    saveSavedRecipes(savedRecipes);
+
+    // Clear input
+    document.getElementById('recipeName').value = '';
+
+    // Refresh saved recipes display
+    displaySavedRecipes();
+
+    alert('Recipe "' + recipeName + '" saved successfully!');
+}
+
+// Delete a saved recipe
+function deleteRecipe(recipeKey) {
+    if (!confirm('Are you sure you want to delete this recipe?')) {
+        return;
+    }
+
+    const savedRecipes = getSavedRecipes();
+    delete savedRecipes[recipeKey];
+    saveSavedRecipes(savedRecipes);
+    displaySavedRecipes();
+}
+
+// Display saved recipes
+function displaySavedRecipes() {
+    const savedRecipes = getSavedRecipes();
+    const savedRecipesList = document.getElementById('savedRecipesList');
+    const myRecipesSection = document.getElementById('myRecipesSection');
+
+    const recipeKeys = Object.keys(savedRecipes);
+
+    if (recipeKeys.length === 0) {
+        myRecipesSection.style.display = 'none';
+        return;
+    }
+
+    myRecipesSection.style.display = 'block';
+
+    let html = '';
+    recipeKeys.forEach(key => {
+        const recipe = savedRecipes[key];
+        html += `
+            <div class="saved-recipe-item">
+                <a href="#" class="recipe-link" onclick="loadRecipe('${key}'); return false;">${recipe.name}</a>
+                <button class="btn-delete-recipe" onclick="deleteRecipe('${key}')" title="Delete recipe">×</button>
+            </div>
+        `;
+    });
+
+    savedRecipesList.innerHTML = html;
 }
 
 // Toggle poolish inputs visibility
@@ -268,5 +369,6 @@ function displayResults(results, unit) {
 
 // Initial calculation on page load
 document.addEventListener('DOMContentLoaded', () => {
+    displaySavedRecipes();
     calculate();
 });

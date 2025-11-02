@@ -56,6 +56,12 @@
                 </div>
             </div>
 
+            <div class="section" id="myRecipesSection" style="display: none;">
+                <h2>My Saved Recipes</h2>
+                <p class="help-text">Your custom saved recipes</p>
+                <div class="recipe-links" id="savedRecipesList"></div>
+            </div>
+
             <div class="section">
                 <h2>Final Dough Weight</h2>
                 <p class="help-text">Enter the total weight of dough you want to make</p>
@@ -128,6 +134,15 @@
                         <input type="number" id="yeast" class="form-input" value="1" placeholder="Yeast" min="0" max="10" step="0.1" oninput="calculate()">
                         <span class="unit-symbol">%</span>
                     </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Save Recipe</h2>
+                <p class="help-text">Save current settings as a custom recipe</p>
+                <div class="save-recipe-form">
+                    <input type="text" id="recipeName" class="form-input" placeholder="Recipe name (e.g., My Pizza Dough)" style="max-width: 400px;">
+                    <button class="btn-save" onclick="saveCurrentRecipe()">Save Recipe</button>
                 </div>
             </div>
 

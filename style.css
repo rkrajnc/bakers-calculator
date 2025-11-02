@@ -316,6 +316,57 @@ h2 {
     transform: translateY(0);
 }
 
+.saved-recipe-item {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-delete-recipe {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+}
+
+.btn-delete-recipe:hover {
+    background: #c0392b;
+}
+
+.save-recipe-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.btn-save {
+    background: #8b6f47;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 24px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: 500;
+}
+
+.btn-save:hover {
+    background: #6d5636;
+}
+
 .results {
     background: #faf6f1;
     border-radius: 8px;
