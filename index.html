@@ -43,7 +43,10 @@
                 <p class="help-text">Enter the total weight of dough you want to make</p>
                 <div class="form-row">
                     <label class="form-label">Dough weight:</label>
-                    <input type="number" id="doughWeight" class="form-input" value="1000" placeholder="Weight" oninput="calculate()">
+                    <div class="input-with-unit">
+                        <input type="number" id="doughWeight" class="form-input" value="1000" placeholder="Weight" oninput="calculate()">
+                        <span class="unit-symbol" id="doughWeightUnit">g</span>
+                    </div>
                 </div>
             </div>
 
@@ -71,7 +74,10 @@
                 <div id="poolishInputs" style="display: none; margin-top: 15px;">
                     <div class="form-row">
                         <label class="form-label">Poolish weight:</label>
-                        <input type="number" id="poolishWeight" class="form-input" value="200" placeholder="Weight" oninput="calculate()">
+                        <div class="input-with-unit">
+                            <input type="number" id="poolishWeight" class="form-input" value="200" placeholder="Weight" oninput="calculate()">
+                            <span class="unit-symbol" id="poolishWeightUnit">g</span>
+                        </div>
                     </div>
                     <div class="form-row">
                         <label class="form-label">Poolish hydration:</label>

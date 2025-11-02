@@ -24,6 +24,10 @@ function calculate() {
     const yeastPercent = parseFloat(document.getElementById('yeast').value) || 0;
     const usePoolish = document.getElementById('usePoolish').checked;
 
+    // Update unit symbols for weight fields
+    document.getElementById('doughWeightUnit').textContent = unit;
+    document.getElementById('poolishWeightUnit').textContent = unit;
+
     if (doughWeightInput <= 0) {
         document.getElementById('resultsList').innerHTML = '<p>Please enter a valid dough weight.</p>';
         return;
